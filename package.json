@@ -1,0 +1,9 @@
+{
+  "name": "koenigstiger",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "bun test",
+    "ktx": "bun run src/cli.ts"
+  }
+}

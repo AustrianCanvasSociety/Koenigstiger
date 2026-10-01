@@ -1,0 +1,8 @@
+# >>> SysConfig managed union-merge >>>
+.claude/handoff.md         merge=union
+.claude/lessons.md         merge=union
+.claude/buglog.md          merge=union
+.claude/state-events.jsonl merge=union
+.claude/db-shadow-divergence.jsonl merge=union
+docs/workflow-changelog.md merge=union
+# <<< SysConfig managed union-merge <<<

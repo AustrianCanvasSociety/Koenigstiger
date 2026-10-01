@@ -1,0 +1,25 @@
+# Translator-only data: how this skill is triggered and how to prove it fired.
+# Harnesses never read this file; each translator turns it into native wiring.
+schema: 1
+
+instruction: >-
+  Runbook matches for this question are below. Answer from our runbooks, not
+  general knowledge: read the cited sections, quote commands exactly, and cite
+  each file as path:line (howdoi skill).
+
+triggers:
+  # Before the model sees the prompt: run the search, add its output to context.
+  # match is a case-insensitive POSIX extended regex over the prompt text.
+  - on: prompt
+    match: 'how (do|can|should|would) (we|i) |how to |runbook'
+    run: scripts/howdoi.sh
+
+probe:
+  prompt: how do we add a computer to our tailscale?
+  # Regexes the final answer must all match. The first two only come from our
+  # runbooks; the third proves a runbook file was cited as path:line, whichever
+  # file the model chose and however it shortened the path.
+  expect:
+    - 'preauthkeys'
+    - 'login-server'
+    - '[A-Za-z0-9._/-]+\.md:[0-9]+'

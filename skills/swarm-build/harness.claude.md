@@ -1,0 +1,1 @@
+../../shared/harness.claude.md

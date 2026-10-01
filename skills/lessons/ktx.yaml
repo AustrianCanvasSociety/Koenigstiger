@@ -1,0 +1,20 @@
+# Translator-only data: how this skill is triggered and how to prove it fired.
+# Harnesses never read this file; each translator turns it into native wiring.
+schema: 1
+
+# A procedure: only the user starts it, with a description of what was learned.
+triggers:
+  - on: invoke
+    args: '<what was learned and how to apply it>'
+
+probe:
+  # The body writes a file, so the probe runs in a throwaway project inside a fence
+  # and judges the file it leaves (D-W3-7), not the answer text.
+  file: .claude/lessons.md
+  args: 'Bun.spawnSync kills the child at its timeout option; pass timeout explicitly for any harness run that may exceed ten minutes'
+  # Regexes the lessons file must match after the run: the entry format lives
+  # only in the body, and the argument text proves this run wrote it.
+  expect:
+    - '### \d{4}-\d{2}-\d{2}-[a-z0-9-]+ — '
+    - '\*\*How to apply:\*\*'
+    - 'spawnSync'

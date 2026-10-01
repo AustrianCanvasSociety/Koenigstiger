@@ -1,0 +1,29 @@
+# Translator-only data: how this skill is triggered and how to prove it fired.
+# Harnesses never read this file; each translator turns it into native wiring.
+schema: 1
+
+# A procedure: only the user starts it, because `set` writes the user's own
+# options. The prompt trigger has no run, so it only adds the instruction: the
+# model offers the procedure instead of starting it.
+instruction: >-
+  The user can show or change ktx's options from this session by typing
+  {invoke} followed by list, get <key> or set <key> <value>. Offer it in one
+  sentence that names {invoke} exactly. Do not run it yourself.
+
+triggers:
+  - on: invoke
+    args: 'list | get <key> | set <key> <value>'
+  - on: prompt
+    match: 'ktx (config|options?|settings?|theme)'
+
+probe:
+  # The tools leg (D-W4-13): the body runs its script, so tools are allowed, in
+  # the fenced throwaway project. `list` only reads, so the fence refuses nothing.
+  tools: true
+  args: list
+  # Regexes the answer must all match. Only the script prints options in this
+  # form, and the values hold whether the run saw the owner's options or a
+  # throwaway home's defaults.
+  expect:
+    - 'theme = (dunkelgelb|tieforange|rot-schwarz|glut)'
+    - 'codex\.trust-hook = (on|off)'

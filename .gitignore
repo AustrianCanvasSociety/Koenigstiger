@@ -1,0 +1,19 @@
+node_modules/
+dist/
+# A wave's records are committed so any machine can gate it (D-W4-6); the rest of
+# a wave dir (driver logs, member dirs, specs) stays local.
+.claude/swarm/**
+!.claude/swarm/*/
+!.claude/swarm/*/input.json
+!.claude/swarm/*/results.json
+!.claude/swarm/*/registry.json
+!.claude/swarm/*/transcripts.json
+.claude/session-boot/
+.claude/session.id
+.claude/routing/
+.claude/state-events.jsonl
+.claude/session-notes/
+.claude/read-events.jsonl
+.claude/.backlog-last-read
+.claude/session-carry.md
+.claude/step-carry.md

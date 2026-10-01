@@ -1,0 +1,28 @@
+# Translator-only data: how this skill is triggered and how to prove it fired.
+# Harnesses never read this file; each translator turns it into native wiring.
+schema: 1
+
+# A procedure: only the user starts it (on: invoke). The prompt trigger has no
+# run, so it only adds the instruction: the model offers the procedure instead
+# of starting it. {invoke} becomes the harness's own command, e.g. /ktx:selftest.
+instruction: >-
+  The user can start the ktx selftest procedure by typing {invoke}. Offer it in
+  one sentence that names {invoke} exactly. Do not run it yourself.
+
+triggers:
+  - on: invoke
+    args: '[any words]'
+  - on: prompt
+    match: 'ktx self-?test'
+
+probe:
+  # The invoke leg starts the procedure natively with these arguments.
+  args: alpha beta
+  # Regexes the invoke answer must all match: the marker only lives in the body.
+  expect:
+    - 'KTX-SELFTEST-7Q2Z'
+    - 'alpha beta'
+  # The offer leg: the hook must fire and the model must name the command
+  # without starting the procedure (the answer matches no expect pattern).
+  offer:
+    prompt: is there a ktx self-test I could run?

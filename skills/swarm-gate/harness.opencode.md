@@ -1,0 +1,1 @@
+../../shared/harness.opencode.md

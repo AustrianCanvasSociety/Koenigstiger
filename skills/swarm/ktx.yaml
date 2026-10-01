@@ -1,0 +1,20 @@
+# Translator-only data: how this skill is triggered and how to prove it fired.
+# Harnesses never read this file; each translator turns it into native wiring.
+schema: 1
+
+# A procedure: only the user starts it, with the task to split into members.
+triggers:
+  - on: invoke
+    args: '<task to split into parallel members>'
+
+probe:
+  # The wave leg (D-W4-7): a throwaway two-member wave in a fenced project, with
+  # the spawn tool granted. The probe replaces {markers} with fresh markers, then
+  # checks the harness's own spawn records, each child's transcript, the records
+  # the body wrote, and the transcript verdict (src/probe/wave.ts).
+  wave:
+    members: 2
+  args: 'W0 probe — a throwaway wave that owns no files. Spawn one member per marker; member i answers with exactly the i-th marker and nothing else: {markers}'
+  # The body reports the transcript check's line verbatim.
+  expect:
+    - 'TRANSCRIPTS: wave=\S+ result=pass'

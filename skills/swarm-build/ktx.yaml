@@ -1,0 +1,17 @@
+# Translator-only data: how this skill is triggered and how to prove it fired.
+# Harnesses never read this file; each translator turns it into native wiring.
+schema: 1
+
+# A procedure: only the user starts it, with the project root.
+triggers:
+  - on: invoke
+    args: '<project-root> [--wave W<N>] [--stage]'
+
+probe:
+  # The tools leg (D-W4-13): a fenced throwaway git project with tools allowed.
+  # --stage runs only the stage finder; a fresh project has no docs/pins.md, so
+  # the build is at stage 1.
+  tools: true
+  args: '--stage'
+  expect:
+    - 'STAGE: wave=- next=1 name=recon'

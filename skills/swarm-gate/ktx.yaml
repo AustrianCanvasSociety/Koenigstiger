@@ -1,0 +1,9 @@
+# Translator-only data: how this skill is triggered and how to prove it fired.
+# Harnesses never read this file; each translator turns it into native wiring.
+schema: 1
+
+# A procedure: only the user starts it. No live probe in W4 (D-W4-13): its code
+# is the gate, unit-tested, and the milestone walkthrough runs it per harness.
+triggers:
+  - on: invoke
+    args: 'wave W<N> <project-root> | milestone M<k> <project-root>'
